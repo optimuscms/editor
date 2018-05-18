@@ -1,0 +1,51 @@
+.editor {
+    display: flex;
+    max-height: 90vh;
+    border-radius: $radius;
+    flex-direction: column;
+    background-color: $white;
+    border: solid 1px $input-border-color;
+
+    .toolbar {
+        flex: none;
+    }
+
+    .editor-scroll {
+        overflow-y: auto;
+    }
+
+    .ql-container {
+        height: 100%;
+        position: relative;
+
+        .ql-editor {
+            tab-size: 4;
+            height: 100%;
+            outline: none;
+            text-align: left;
+            overflow-y: auto;
+            min-height: 200px;
+            padding: 12px 15px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+
+            > *,
+            > a {
+                cursor: text !important;
+            }
+        }
+    }
+
+    .ql-clipboard {
+        top: 50%;
+        height: 1px;
+        left: -100000px;
+        overflow-y: hidden;
+        position: absolute;
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+    }
+}

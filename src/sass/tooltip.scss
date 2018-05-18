@@ -1,0 +1,100 @@
+.editor {
+    .ql-tooltip {
+        z-index: 10;
+        padding: 5px 12px;
+        position: absolute;
+        white-space: nowrap;
+        background-color: $white;
+        transform: translateY(5px);
+        box-shadow: 0 0 5px rgba($black, .2);
+        border: solid 1px $input-border-color;
+
+        &:before {
+            line-height: 26px;
+            margin-right: 8px;
+            content: "Visit URL:";
+        }
+
+        &.ql-hidden {
+            top: -100%;
+            left: -100%;
+            visibility: hidden;                
+        }
+
+        &.ql-flip {
+            transform: translateY(-10px);
+        }
+
+        &[data-mode=link]:before {
+            content: "Enter link:";
+        }
+
+        &[data-mode=formula]:before {
+            content: "Enter formula:";
+        }
+
+        &[data-mode=video]:before {
+            content: "Enter video:";
+        }
+
+        &.ql-editing {
+            .ql-preview,
+            .ql-remove {
+                display: none;
+            }
+
+            input[type=text] {
+                display: inline-block;
+            }
+
+            .ql-action {
+                &:after {
+                    content: 'Save';
+                    border-right: 0px;
+                    padding-right: 0px;
+                }
+            }
+        }
+
+        a {
+            color: $primary;
+            cursor: pointer;
+            line-height: 26px;
+            font-size: $size-normal;
+        }
+
+        input[type=text] {
+            margin: 0px;
+            width: 170px;
+            height: 26px;
+            display: none;
+            padding: 3px 5px;
+            font-size: $size-normal;
+            border: 1px solid $input-border-color;
+        }
+
+        .ql-preview {
+            max-width: 200px;
+            overflow-x: hidden;
+            vertical-align: top;
+            display: inline-block;
+            text-overflow: ellipsis;
+        }
+
+        .ql-action {
+            &:after {
+                content: 'Edit';
+                margin-left: 16px;
+                padding-right: 8px;
+                border-right: 1px solid $input-border-color;
+            }
+        }
+
+        .ql-remove {
+            &:before {
+                margin-left: 8px;
+                content: 'Remove';
+            }
+        }
+    }
+}
