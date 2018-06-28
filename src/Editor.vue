@@ -139,7 +139,7 @@
             </div>
         </div>
 
-        <div ref="scroll" class="editor-scroll">
+        <div class="editor-scroll">
             <div ref="editor" class="content"></div>
         </div>
     </div>
