@@ -1,195 +1,193 @@
 <template>
-    <div ref="bounds" class="editor">
-        <div ref="toolbar" class="toolbar">
-            <div class="field">
-                <div class="control">
-                    <editor-dropdown class="is-wide">
-                        <span slot="label">{{ selectedDropdownItem(toolbar.headers, getFormat('header')).label }}</span>
-
-                        <div class="content">
-                            <a class="dropdown-item"
-                                :class="{ 'is-active': getFormat('header') === option.value }"
-                                :key="option.value"
-                                v-for="option in toolbar.headers"
-                                @click="applyFormat('header', option.value)">
-                                <component :is="option.element || 'span'" class="mb-0">
-                                    {{ option.label }}
-                                </component>
-                            </a>
-                        </div>
-                    </editor-dropdown>
-                </div>
-
-                <div class="control">
-                    <editor-dropdown @open="setSelection()">
-                        <span slot="label" class="icon is-small">
-                            <icon icon="paragraph"></icon>
-                        </span>
-
-                        <a class="dropdown-item"
-                            :class="{ 'is-active': hasFormat('button') }"
-                            @click="addButton()">
-                            Button
-                        </a>
-
-                        <a class="dropdown-item"
-                            :class="{ 'is-active': getFormat('style') === 'title' }"
-                            @click="toggleFormat('style', 'title')">
-                            <span class="title mb-0">Title</span>
-                        </a>
-
-                        <a class="dropdown-item"
-                            :class="{ 'is-active': getFormat('style') === 'subtitle' }"
-                            @click="toggleFormat('style', 'subtitle')">
-                            <span class="subtitle mb-0">Subtitle</span>
-                        </a>
-                    </editor-dropdown>
-                </div>
-
-                <div class="control">
-                    <a class="button" :class="{ 'is-active': hasFormat('bold') }" @click="toggleFormat('bold')">
-                        <span class="icon is-small">
-                            <icon icon="bold"></icon>
-                        </span>
-                    </a>
-                </div>
-
-                <div class="control">
-                    <a class="button" :class="{ 'is-active': hasFormat('italic') }" @click="toggleFormat('italic')">
-                        <span class="icon is-small">
-                            <icon icon="italic"></icon>
-                        </span>
-                    </a>
-                </div>
-
-                <div class="control">
-                    <a class="button" :class="{ 'is-active': hasFormat('underline') }" @click="toggleFormat('underline')">
-                        <span class="icon is-small">
-                            <icon icon="underline"></icon>
-                        </span>
-                    </a>
-                </div>
-
-                <div class="control">
-                    <a class="button" :class="{ 'is-active': hasFormat('blockquote') }" @click="toggleFormat('blockquote')">
-                        <span class="icon is-small">
-                            <icon icon="quote-right"></icon>
-                        </span>
-                    </a>
-                </div>
-
-                <div class="control">
-                    <editor-dropdown>
-                        <span slot="label" class="icon is-small">
-                            <icon :icon="selectedDropdownItem(toolbar.align, getFormat('align')).icon"></icon>
-                        </span>
-
-                        <a class="dropdown-item"
-                            :title="option.label"
-                            :class="{ 'is-active': getFormat('align') === option.value }"
-                            :key="option.value"
-                            v-for="option in toolbar.align"
-                            @click="applyFormat('align', option.value)">
-                            <span class="icon">
-                                <icon :icon="option.icon"></icon>
-                            </span>
-                        </a>
-                    </editor-dropdown>
-                </div>
-
-                <div class="control">
-                    <a class="button" :class="{ 'is-active': getFormat('list') === 'bullet' }" @click="toggleFormat('list', 'bullet')">
-                        <span class="icon is-small">
-                            <icon icon="list-ul"></icon>
-                        </span>
-                    </a>
-                </div>
-
-                <div class="control">
-                    <a class="button" :class="{ 'is-active': getFormat('list') === 'ordered' }" @click="toggleFormat('list', 'ordered')">
-                        <span class="icon is-small">
-                            <icon icon="list-ol"></icon>
-                        </span>
-                    </a>
-                </div>
-
-                <div class="control">
-                    <a class="button" :class="{ 'is-active': hasFormat('link') }" @click="addLink()">
-                        <span class="icon is-small">
-                            <icon icon="link"></icon>
-                        </span>
-                    </a>
-                </div>
-
-                <!-- <div class="control">
-                    <a class="button">
-                        <span class="icon is-small">
-                            <i class="fa fa-picture-o"></i>
-                        </span>
-                    </a>
-                </div> -->
-
-                <!-- <div class="control">
-                    <a class="button" :class="{ 'is-active': selection.format.embed }" @click="embed">
-                        <span class="icon is-small">
-                            <i class="fa fa-film"></i>
-                        </span>
-                    </a>
-                </div> -->
-            </div>
-        </div>
-
-        <div class="editor-scroll">
-            <div ref="editor" class="content"></div>
-        </div>
-    </div>
+    <editor :api-key="apiKey" v-model="content" :init="options"></editor>
 </template>
 
 <script>
-    import EditorDropdown from './components/Dropdown';
-    import editor from './mixins/editor';
+    import { mapGetters} from 'vuex';
+    import Editor from '@tinymce/tinymce-vue';
 
     export default {
-        components: { EditorDropdown },
+        components: {
+            Editor
+        },
 
-        mixins: [ editor ],
+        props: {
+            value: String,
 
-        data() {
-            return {
-                selection: null
+            height: {
+                type: Number,
+                default: 500
+            },
+
+            headings: {
+                type: Object,
+                default() {
+                    return {
+                        title: 'Headings',
+                        items: [
+                            { title: 'Heading 1', block: 'h1' },
+                            { title: 'Heading 2', block: 'h2' },
+                            { title: 'Heading 3', block: 'h3' },
+                            { title: 'Heading 4', block: 'h4' },
+                            { title: 'Heading 5', block: 'h5' },
+                            { title: 'Heading 6', block: 'h6' },
+                            { title: 'Paragraph', block: 'p' }
+                        ]
+                    }
+                }
+            },
+
+            heading_styles: {
+                type: Object,
+                default() {
+                    return {
+                        title: 'Heading Styles',
+                        items: [
+                            {
+                                title: 'Title',
+                                classes: 'title',
+                                selector: 'h1,h2,h3,h4,h5,h6'
+                            },
+                            {
+                                title: 'Subtitle',
+                                classes: 'subtitle',
+                                selector: 'h1,h2,h3,h4,h5,h6'
+                            }
+                        ]
+                    }
+                }
+            },
+
+            inline_styles: {
+                type: Object,
+                default() {
+                    return {
+                        title: 'Inline Styles',
+                        items: [
+                            {
+                                title: 'Button',
+                                classes: 'button is-primary',
+                                selector: 'a'
+                            }
+                        ]
+                    }
+                }
+            },
+
+            image_styles: {
+                type: Object,
+                default() {
+                    return {
+                        title: 'Image Styles',
+                        items: [
+                            {
+                                title: 'Image left',
+                                classes: 'is-left',
+                                selector: 'img'
+                            },
+                            {
+                                title: 'Image right',
+                                classes: 'is-right',
+                                selector: 'img'
+                            }
+                        ]
+                    }
+                }
             }
         },
 
-        methods: {
-            insertMedia() {
-                // Open Media Manger
-                // Listen for input
-                // Use image url to embed
+        computed: {
+            ...mapGetters({
+                getMedia: 'media/getActiveMedia',
+                imageExtensions: 'media/imageExtensions'
+            }),
 
-                // this.quill.insertEmbed(0, 'image', 'http://via.placeholder.com/350x100.png');
-            },
+            options() {
+                return {
+                    menubar: false,
+                    branding: false,
+                    height: this.height,
+                    body_class: 'content p-3',
+                    content_css : '/css/front/app.css',
+                    plugins: 'image link lists paste table',
 
-            addLink() {
-                let range = this.quill.getSelection();
+                    style_formats: [
+                        this.headings,
+                        this.heading_styles,
+                        this.inline_styles,
+                        this.image_styles
+                    ],
 
-                if (range && range.length) {
-                    this.tooltip.edit('link');
+                    formats: {
+                        alignleft: {
+                            classes: '',
+                            selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img'
+                        },
+                        aligncenter: {
+                            classes: 'has-text-centered',
+                            selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img'
+                        },
+                        alignright: {
+                            classes: 'has-text-right',
+                            selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img'
+                        }
+                    },
+
+                    toolbar: `
+                        undo redo removeformat | 
+                        styleselect | 
+                        bold italic | 
+                        alignleft aligncenter alignright | 
+                        bullist numlist | 
+                        table link image | 
+                    `,
+
+                    table_responsive_width: true,
+                    table_appearance_options: false,
+                    table_default_styles: {
+                        width: '100%'
+                    },
+                    table_default_attributes: {
+                        border: 0,
+                        class: 'table is-bordered'
+                    },
+
+                    file_picker_types: 'image',
+                    file_picker_callback: (callback, value, meta) => {
+                        eventBus.$emit('media-manager-open', {
+                            limit: 1,
+                            accept: this.imageExtensions
+                        });
+
+                        eventBus.$on('media-selected', mediaIds => {
+                            callback(this.getMedia(mediaIds)[0].url, {
+                                alt: this.getMedia(mediaIds)[0].name
+                            });
+                        });
+                    }
                 }
-            },
-
-            addButton() {
-                if (this.selection && this.selection.length) {
-                    this.tooltip.edit('button');
-                }
-            },
-
-            setSelection() {
-                this.selection = this.quill.getSelection();
-            },
-
-            selectedDropdownItem(options, value) {
-                return options.find(option => option.value === value);
             }
+        },
+
+        data() {
+            return {
+                apiKey: process.env.MIX_TINYMCE_API_KEY,
+                content: ''
+            }
+        },
+
+        watch: {
+            value(value) {
+                this.content = value;
+            },
+
+            content(value) {
+                this.$emit('input', value);
+            }
+        },
+
+        mounted() {
+            this.content = this.value;
         }
     }
 </script>
