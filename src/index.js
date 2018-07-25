@@ -1,8 +1,7 @@
-import { mapGetters} from 'vuex';
 import * as values from './values';
 import BaseEditor from '@tinymce/tinymce-vue';
 
-export default function install(Vue, options = {}) {
+export default function install(Vue, { store, options = {} }) {
     Vue.component('editor', {
         template: `<base-editor :api-key="apiKey" v-model="content" :init="init"></base-editor>`,
 
@@ -23,11 +22,6 @@ export default function install(Vue, options = {}) {
         },
 
         computed: {
-            ...mapGetters({
-                getMedia: 'media/getActiveMedia',
-                imageExtensions: 'media/imageExtensions'
-            }),
-
             init() {
                 return {
                     branding: false,
@@ -76,12 +70,12 @@ export default function install(Vue, options = {}) {
                     file_picker_callback: (callback, value, meta) => {
                         eventBus.$emit('media-manager-open', {
                             limit: 1,
-                            accept: this.imageExtensions
+                            accept: store.getters['media/imageExtensions']
                         });
 
                         eventBus.$on('media-selected', mediaIds => {
-                            callback(this.getMedia(mediaIds)[0].url, {
-                                alt: this.getMedia(mediaIds)[0].name
+                            callback(store.getters['media/getActiveMedia'](mediaIds)[0].url, {
+                                alt: store.getters['media/getActiveMedia'](mediaIds)[0].name
                             });
                         });
                     }
