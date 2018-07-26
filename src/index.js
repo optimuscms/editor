@@ -16,7 +16,7 @@ export default function install(Vue, { store, options = {} }) {
 
         data() {
             return {
-                apiKey: process.env.MIX_TINYMCE_API_KEY,
+                apiKey: options.apiKey,
                 content: this.value
             }
         },
