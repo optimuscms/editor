@@ -1,6 +1,6 @@
 {
   "name": "@optimuscms/editor",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "author": "Rich Moore",
   "license": "MIT",
   "main": "src/index.js",
