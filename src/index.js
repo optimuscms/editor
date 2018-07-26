@@ -30,15 +30,16 @@ export default function install(Vue, { store, options = {} }) {
                     body_class: options.body_class || 'content p-3',
                     content_css : options.content_css || '/css/front/app.css',
                     style_formats: options.style_formats || values.styleFormats,
-                    plugins: this.plugins || options.plugins || 'image link lists paste table',
+                    plugins: this.plugins || options.plugins || 'hr image link lists paste table',
 
                     toolbar: this.toolbar || options.toolbar || `
-                        undo redo removeformat | 
+                        undo redo | 
                         styleselect | 
-                        bold italic | 
+                        bold italic underline | 
                         alignleft aligncenter alignright | 
-                        bullist numlist | 
+                        bullist numlist hr blockquote | 
                         table link image | 
+                        removeformat | 
                     `,
 
                     formats: {

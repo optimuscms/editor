@@ -48,6 +48,11 @@ let styleFormats = [
                 title: 'Image right',
                 classes: 'is-right',
                 selector: 'img'
+            },
+            {
+                title: 'Image centered',
+                classes: 'is-centered',
+                selector: 'img'
             }
         ]
     }
