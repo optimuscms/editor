@@ -9,9 +9,19 @@ npm install @optimuscms/editor --save
 yarn add @optimuscms/editor
 ```
 
+```javascript
+import Editor from '@optimuscms/editor';
+
+Vue.use(Editor, {
+    apiKey: 'your-api-key'
+});
+```
+
 ## Usage
 
-The default config can be modified using any of the TinyMCE options
+### Configuration
+
+The default configuration [options](src/config.js) can be modified using any of the TinyMCE options.
 
 ```javascript
 import Editor, { config } from '@optimuscms/editor';
@@ -21,6 +31,20 @@ config.branding = true;
 Vue.use(Editor, {
     apiKey: 'your-api-key'
 });
+```
+
+### Component
+
+The plugin registers an `<editor>` component.
+
+```html
+<editor v-model="content"></editor>
+```
+
+It's also possible to modifiy a specific component's configuration options via the `config` prop.
+
+```html
+<editor v-model="content" :config="{ branding: true }"></editor>
 ```
 
 ## License
