@@ -37,13 +37,13 @@ Vue.use(Editor, {
 
 The plugin registers an `<editor>` component.
 
-```html
+```vue
 <editor v-model="content"></editor>
 ```
 
 It's also possible to modifiy a specific component's configuration options via the `config` prop.
 
-```html
+```vue
 <editor v-model="content" :config="{ branding: true }"></editor>
 ```
 
