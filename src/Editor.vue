@@ -1,5 +1,6 @@
 <template>
     <base-editor
+        :id="id"
         :init="init"
         v-model="content"
         :api-key="apiKey"
@@ -18,6 +19,7 @@
                 default: () => {}
             },
 
+            id: String,
             value: String
         },
 
