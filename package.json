@@ -1,10 +1,10 @@
 {
   "name": "@optimuscms/editor",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "author": "Rich Moore",
   "license": "MIT",
   "main": "src/index.js",
   "dependencies": {
-    "@tinymce/tinymce-vue": "^1.0.8"
+    "@tinymce/tinymce-vue": "^1.1.0"
   }
 }

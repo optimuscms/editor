@@ -2,7 +2,7 @@ let config = {
     branding: false,
     menubar: false,
     height: 500,
-    body_class: 'content p-3',
+    body_class: 'content p-4',
     content_css: '/css/front/app.css',
     plugins: 'hr image link lists paste table',
     toolbar: `
@@ -20,11 +20,11 @@ let config = {
             selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img'
         },
         aligncenter: {
-            classes: 'has-text-centered',
+            classes: 'text-center',
             selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img'
         },
         alignright: {
-            classes: 'has-text-right',
+            classes: 'text-right',
             selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img'
         }
     },
@@ -61,7 +61,7 @@ let config = {
             items: [
                 {
                     title: 'Button',
-                    classes: 'button is-primary',
+                    classes: 'button button-primary',
                     selector: 'a'
                 }
             ]
@@ -71,17 +71,17 @@ let config = {
             items: [
                 {
                     title: 'Image left',
-                    classes: 'is-left',
+                    classes: 'image-left',
                     selector: 'img'
                 },
                 {
                     title: 'Image right',
-                    classes: 'is-right',
+                    classes: 'image-right',
                     selector: 'img'
                 },
                 {
                     title: 'Image centered',
-                    classes: 'is-centered',
+                    classes: 'image-center',
                     selector: 'img'
                 }
             ]
@@ -93,8 +93,7 @@ let config = {
         width: '100%'
     },
     table_default_attributes: {
-        border: 0,
-        class: 'table is-bordered'
+        border: 0
     }
 };
 
