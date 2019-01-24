@@ -1,22 +1,28 @@
-import defaultConfig from './config';
+import config from './config';
 import Editor from './Editor';
 
-export default function install(Vue, { apiKey }) {
+export default function install(Vue, options = {}) {
     Vue.component('editor', Vue.extend({
         extends: Editor,
 
         data() {
             return {
-                apiKey: apiKey,
+                apiKey: options.apiKey,
             }
         },
 
         computed: {
+            defaultConfig() {
+                return options.hasOwnProperty('config')
+                    ? options.config
+                    : config.defaults();
+            },
+
             init() {
-                return Object.assign({}, defaultConfig, this.config);
+                return { ...this.defaultConfig, ...this.config };
             }
         }
     }));
 }
 
-export { defaultConfig as config };
+export { config };
