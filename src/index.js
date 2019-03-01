@@ -2,6 +2,7 @@ import config from './config';
 import Editor from './Editor';
 
 export default function install(Vue, options = {}) {
+
     Vue.component('editor', Vue.extend({
         extends: Editor,
 
@@ -23,6 +24,7 @@ export default function install(Vue, options = {}) {
             }
         }
     }));
+    
 }
 
 export { config };

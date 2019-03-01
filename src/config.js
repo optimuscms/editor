@@ -1,9 +1,10 @@
 export default {
     defaults() {
         return {
-            branding: false,
-            menubar: false,
             height: 500,
+            menubar: false,
+            branding: false,
+            convert_urls: false,
             body_class: 'content p-4',
             content_css: '/css/front/app.css',
             plugins: 'hr image link lists paste table',

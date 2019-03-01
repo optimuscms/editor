@@ -1,0 +1,37 @@
+.mce-tinymce {
+    box-shadow: $editor-shadow !important;
+    border-color: $editor-border-color !important;
+    border-radius: $editor-border-radius !important;
+}
+
+.mce-toolbar-grp {
+    border-radius: $editor-border-radius $editor-border-radius 0 0 !important;
+}
+
+.mce-statusbar {
+    border-radius: 0 0 $editor-border-radius $editor-border-radius !important;
+}
+
+.mce-top-part {
+    &:before {
+        box-shadow: none !important;
+    }
+}
+
+.mce-panel {
+    border-color: $editor-border-color !important;
+}
+
+#mce-modal-block {
+    z-index: 40 !important;
+}
+
+.mce-window {
+    z-index: 41 !important;
+}
+
+td,
+th {
+    font-size: inherit;
+    font-family: inherit;
+}
