@@ -19,7 +19,11 @@
                 default: () => {}
             },
 
-            id: String,
+            id: {
+                type: String,
+                required: true
+            },
+            
             value: String
         },
 
