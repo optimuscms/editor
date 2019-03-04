@@ -10,6 +10,7 @@ npm install @optimuscms/editor --save
 yarn add @optimuscms/editor
 ```
 
+#### Javascript
 ```javascript
 import Editor from '@optimuscms/editor';
 
@@ -18,6 +19,7 @@ Vue.use(Editor, {
 });
 ```
 
+#### SCSS
 ```scss
 @import '~@optimuscms/editor/dist/styles.css';
 ```
@@ -39,9 +41,12 @@ Vue.use(Editor, {
 });
 ```
 
+An optional parameter of `componentName` can be passed allowing you to set a custom component name for
+the editor, by default this is `editor`.
+
 ### Component
 
-The plugin registers an `<editor>` component.
+By default the plugin registers an `<editor>` component.
 
 ```vue
 <editor v-model="content"></editor>
