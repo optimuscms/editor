@@ -6,6 +6,7 @@ The Optimus CMS WYSIWYG editor powered by TinyMCE.
 
 ```bash
 npm install @optimuscms/editor --save
+
 yarn add @optimuscms/editor
 ```
 
@@ -15,6 +16,10 @@ import Editor from '@optimuscms/editor';
 Vue.use(Editor, {
     apiKey: 'your-api-key'
 });
+```
+
+```scss
+@import '~@optimuscms/editor/dist/styles.css';
 ```
 
 ## Usage
