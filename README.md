@@ -5,8 +5,10 @@ The Optimus CMS WYSIWYG editor powered by TinyMCE.
 ## Installation
 
 ```bash
+# npm
 npm install @optimuscms/editor --save
 
+# yarn
 yarn add @optimuscms/editor
 ```
 

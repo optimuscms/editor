@@ -18,10 +18,10 @@ export default function install(Vue, options = {}) {
 
         computed: {
             init() {
-                return {
-                    ...defaultOptions.config,
-                    ...this.config
-                };
+                return Object.assign({},
+                    defaultOptions.config,
+                    this.config
+                );
             }
         }
     }));
