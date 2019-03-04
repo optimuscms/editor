@@ -2,8 +2,12 @@ import config from './config';
 import Editor from './Editor';
 
 export default function install(Vue, options = {}) {
+    let defaultOptions = {
+        config: options.config || config,
+        componentName: options.componentName || 'editor'
+    };
 
-    Vue.component('editor', Vue.extend({
+    Vue.component(defaultOptions.componentName, Vue.extend({
         extends: Editor,
 
         data() {
@@ -13,18 +17,14 @@ export default function install(Vue, options = {}) {
         },
 
         computed: {
-            defaultConfig() {
-                return options.hasOwnProperty('config')
-                    ? options.config
-                    : config.defaults();
-            },
-
             init() {
-                return { ...this.defaultConfig, ...this.config };
+                return {
+                    ...defaultOptions.config,
+                    ...this.config
+                };
             }
         }
     }));
-    
 }
 
 export { config };
