@@ -29,7 +29,8 @@ import Editor, { config } from '@optimuscms/editor';
 config.branding = true;
 
 Vue.use(Editor, {
-    apiKey: 'your-api-key'
+    apiKey: 'your-api-key',
+    config: config
 });
 ```
 
