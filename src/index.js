@@ -16,6 +16,24 @@ export default function install(Vue, options = {}) {
             }
         },
 
+        created() {
+            if (config.hasOwnProperty('onCreated')) {
+                config.onCreated();
+            }
+        },
+
+        mounted() {
+            if (config.hasOwnProperty('onMounted')) {
+                config.onMounted();
+            }
+        },
+
+        beforeDestroy() {
+            if (config.hasOwnProperty('onBeforeDestroy')) {
+                config.onBeforeDestroy();
+            }
+        },
+
         computed: {
             init() {
                 return Object.assign({},
