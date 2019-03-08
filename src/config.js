@@ -5,7 +5,7 @@ function config() {
         branding: false,
         convert_urls: false,
         body_class: 'content p-4',
-        content_css: '/css/front/app.css',
+        content_css: '/front/css/app.css',
         plugins: 'hr image link lists paste table',
 
         toolbar: `
