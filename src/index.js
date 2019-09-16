@@ -1,10 +1,10 @@
 import config from './config';
-import Editor from './Editor';
+import Editor from './Editor.vue';
 
 export default function install(Vue, options = {}) {
     let defaultOptions = {
         config: options.config || config,
-        componentName: options.componentName || 'editor'
+        componentName: options.componentName || 'editor',
     };
 
     Vue.component(defaultOptions.componentName, Vue.extend({
@@ -13,7 +13,16 @@ export default function install(Vue, options = {}) {
         data() {
             return {
                 apiKey: options.apiKey,
-            }
+            };
+        },
+
+        computed: {
+            init() {
+                return Object.assign({},
+                    defaultOptions.config,
+                    this.config
+                );
+            },
         },
 
         created() {
@@ -33,15 +42,6 @@ export default function install(Vue, options = {}) {
                 config.onBeforeDestroy();
             }
         },
-
-        computed: {
-            init() {
-                return Object.assign({},
-                    defaultOptions.config,
-                    this.config
-                );
-            }
-        }
     }));
 }
 

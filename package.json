@@ -1,20 +1,38 @@
 {
-  "name": "@optimuscms/editor",
-  "version": "2.2.4",
-  "author": "Rich Moore",
-  "license": "MIT",
-  "main": "src/index.js",
-  "scripts": {
-    "sass": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-  },
-  "dependencies": {
-    "@tinymce/tinymce-vue": "^1.1.0"
-  },
-  "devDependencies": {
-    "cross-env": "^5.2.0",
-    "laravel-mix": "^4.0.14",
-    "resolve-url-loader": "2.3.1",
-    "sass": "^1.17.2",
-    "sass-loader": "^7.1.0"
-  }
+    "name": "@optimuscms/editor",
+    "version": "2.2.4",
+    "main": "dist/editor.js",
+    "module": "dist/editor.esm.js",
+    "browser": {
+        "./sfc": "src/index.js"
+    },
+    "author": "Rich Moore <rich@optixsolutions.co.uk>",
+    "license": "MIT",
+    "scripts": {
+        "build": "yarn clean && rollup --config rollup.config.js",
+        "clean": "rm -f dist/*",
+        "lint": "node_modules/eslint/bin/eslint.js --ext .js,.vue src"
+    },
+    "dependencies": {
+        "@tinymce/tinymce-vue": "^1.1.0",
+        "vue": "^2.6.10"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.5.5",
+        "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+        "@babel/preset-env": "^7.6.0",
+        "autoprefixer": "^9.6.1",
+        "cssnano": "^4.1.10",
+        "eslint": "^6.1.0",
+        "eslint-plugin-vue": "^5.2.3",
+        "node-sass": "^4.12.0",
+        "rollup": "^1.20.3",
+        "rollup-plugin-babel": "^4.3.3",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-eslint": "^7.0.0",
+        "rollup-plugin-postcss": "^2.0.3",
+        "rollup-plugin-terser": "^5.1.1",
+        "rollup-plugin-vue": "^5.0.1",
+        "vue-template-compiler": "^2.6.10"
+    }
 }

@@ -1,46 +1,49 @@
 <template>
     <base-editor
         :id="id"
-        :init="init"
         v-model="content"
+        :init="init"
         :api-key="apiKey"
-    ></base-editor>
+    />
 </template>
 
 <script>
-    import BaseEditor from '@tinymce/tinymce-vue';
+import Editor from '@tinymce/tinymce-vue';
 
-    export default {
-        components: { BaseEditor },
-        
-        props: {
-            config: {
-                type: Object,
-                default: () => {}
-            },
+export default {
+    components: { BaseEditor: Editor },
 
-            id: {
-                type: String,
-                required: true
-            },
-            
-            value: String
+    props: {
+        config: {
+            type: Object,
+            default: () => {},
         },
 
-        data() {
-            return {
-                content: this.value
-            }
+        id: {
+            type: String,
+            required: true,
         },
 
-        watch: {
-            value(value) {
-                this.content = value;
-            },
+        value: {
+            type: String,
+            default: null,
+        },
+    },
 
-            content(value) {
-                this.$emit('input', value);
-            }
-        }
-    }
+    data() {
+        return {
+            content: this.value,
+        };
+    },
+
+    watch: {
+        value(value) {
+            this.content = value;
+        },
+
+        content(value) {
+            this.$emit('input', value);
+        },
+    },
+};
 </script>
