@@ -1,4 +1,4 @@
-function config() {
+const config = () => {
     return {
         height: 500,
         menubar: false,
@@ -9,13 +9,13 @@ function config() {
         plugins: 'hr image link lists paste table',
 
         toolbar: `
-            undo redo | 
-            styleselect | 
-            bold italic underline | 
-            alignleft aligncenter alignright | 
-            bullist numlist hr blockquote | 
-            table link image | 
-            removeformat | 
+            undo redo |
+            styleselect |
+            bold italic underline |
+            alignleft aligncenter alignright |
+            bullist numlist hr blockquote |
+            table link image |
+            removeformat |
         `,
 
         formats: {
@@ -23,12 +23,10 @@ function config() {
                 classes: '',
                 selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img',
             },
-
             aligncenter: {
                 classes: 'text-center',
                 selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img',
             },
-
             alignright: {
                 classes: 'text-right',
                 selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,table,img',
@@ -68,7 +66,7 @@ function config() {
                 items: [
                     {
                         title: 'Button',
-                        classes: 'button button-primary',
+                        classes: 'button',
                         selector: 'a',
                     },
                 ],
@@ -104,6 +102,6 @@ function config() {
             border: 0,
         },
     };
-}
+};
 
 export default config();

@@ -1,6 +1,6 @@
 import Editor$1 from '@tinymce/tinymce-vue';
 
-function config() {
+var config = function config() {
   return {
     height: 500,
     menubar: false,
@@ -9,7 +9,7 @@ function config() {
     body_class: 'content p-4',
     content_css: '/front/css/app.css',
     plugins: 'hr image link lists paste table',
-    toolbar: "\n            undo redo | \n            styleselect | \n            bold italic underline | \n            alignleft aligncenter alignright | \n            bullist numlist hr blockquote | \n            table link image | \n            removeformat | \n        ",
+    toolbar: "\n            undo redo |\n            styleselect |\n            bold italic underline |\n            alignleft aligncenter alignright |\n            bullist numlist hr blockquote |\n            table link image |\n            removeformat |\n        ",
     formats: {
       alignleft: {
         classes: '',
@@ -63,7 +63,7 @@ function config() {
       title: 'Inline Styles',
       items: [{
         title: 'Button',
-        classes: 'button button-primary',
+        classes: 'button',
         selector: 'a'
       }]
     }, {
@@ -91,7 +91,7 @@ function config() {
       border: 0
     }
   };
-}
+};
 
 var config$1 = config();
 
