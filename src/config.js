@@ -6,15 +6,16 @@ const config = () => {
         convert_urls: false,
         body_class: 'content p-4',
         content_css: '/front/css/app.css',
-        plugins: 'hr image link lists paste table',
+        plugins: 'hr image link lists paste table media',
 
         toolbar: `
+            code |
             undo redo |
             styleselect |
             bold italic underline |
             alignleft aligncenter alignright |
             bullist numlist hr blockquote |
-            table link image |
+            table link image media |
             removeformat |
         `,
 
@@ -100,6 +101,26 @@ const config = () => {
         },
         table_default_attributes: {
             border: 0,
+        },
+
+        media_url_resolver: (data, resolve, reject) => {
+            const matches = data.url.match(
+                /(?:https?:\/\/)?(?:www\.)?(?:youtu.be\/|youtube\.com\/(?:watch(?:\/|\/?\?(?:\S*&)?v=)|embed\/))([\w\d-]+)/,
+            );
+
+            if (matches !== null && matches[1]) {
+                resolve({
+                    html: `<div class="video-embed">
+                        <iframe
+                            src="https://www.youtube.com/embed/${matches[1]}?modestbranding=1&autohide=1&showinfo=0&rel=0"
+                            frameborder="0"
+                            allowfullscreen
+                        ></iframe>
+                    </div>`,
+                });
+            } else {
+                reject({ msg: 'Incorrect video url.' });
+            }
         },
     };
 };

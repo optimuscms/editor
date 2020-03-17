@@ -20,7 +20,7 @@ export default function install(Vue, options = {}) {
             init() {
                 return Object.assign({},
                     defaultOptions.config,
-                    this.config
+                    this.config,
                 );
             },
         },

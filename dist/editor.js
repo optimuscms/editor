@@ -2,9 +2,9 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@tinymce/tinymce-vue')) :
     typeof define === 'function' && define.amd ? define(['exports', '@tinymce/tinymce-vue'], factory) :
     (global = global || self, factory(global.Editor = {}, global.Editor));
-}(this, function (exports, Editor$1) { 'use strict';
+}(this, (function (exports, Editor) { 'use strict';
 
-    Editor$1 = Editor$1 && Editor$1.hasOwnProperty('default') ? Editor$1['default'] : Editor$1;
+    Editor = Editor && Object.prototype.hasOwnProperty.call(Editor, 'default') ? Editor['default'] : Editor;
 
     var config = function config() {
       return {
@@ -14,8 +14,8 @@
         convert_urls: false,
         body_class: 'content p-4',
         content_css: '/front/css/app.css',
-        plugins: 'hr image link lists paste table',
-        toolbar: "\n            undo redo |\n            styleselect |\n            bold italic underline |\n            alignleft aligncenter alignright |\n            bullist numlist hr blockquote |\n            table link image |\n            removeformat |\n        ",
+        plugins: 'hr image link lists paste table media',
+        toolbar: "\n            code |\n            undo redo |\n            styleselect |\n            bold italic underline |\n            alignleft aligncenter alignright |\n            bullist numlist hr blockquote |\n            table link image media |\n            removeformat |\n        ",
         formats: {
           alignleft: {
             classes: '',
@@ -95,6 +95,19 @@
         },
         table_default_attributes: {
           border: 0
+        },
+        media_url_resolver: function media_url_resolver(data, resolve, reject) {
+          var matches = data.url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtu.be\/|youtube\.com\/(?:watch(?:\/|\/?\?(?:\S*&)?v=)|embed\/))([\w\d-]+)/);
+
+          if (matches !== null && matches[1]) {
+            resolve({
+              html: "<div class=\"video-embed\">\n                        <iframe\n                            src=\"https://www.youtube.com/embed/".concat(matches[1], "?modestbranding=1&autohide=1&showinfo=0&rel=0\"\n                            frameborder=\"0\"\n                            allowfullscreen\n                        ></iframe>\n                    </div>")
+            });
+          } else {
+            reject({
+              msg: 'Incorrect video url.'
+            });
+          }
         }
       };
     };
@@ -104,7 +117,7 @@
     //
     var script = {
       components: {
-        BaseEditor: Editor$1
+        BaseEditor: Editor
       },
       props: {
         config: {
@@ -135,90 +148,80 @@
       }
     };
 
-    function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
-    /* server only */
-    , shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-      if (typeof shadowMode !== 'boolean') {
-        createInjectorSSR = createInjector;
-        createInjector = shadowMode;
-        shadowMode = false;
-      } // Vue.extend constructor export interop.
-
-
-      var options = typeof script === 'function' ? script.options : script; // render functions
-
-      if (template && template.render) {
-        options.render = template.render;
-        options.staticRenderFns = template.staticRenderFns;
-        options._compiled = true; // functional template
-
-        if (isFunctionalTemplate) {
-          options.functional = true;
+    function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+        if (typeof shadowMode !== 'boolean') {
+            createInjectorSSR = createInjector;
+            createInjector = shadowMode;
+            shadowMode = false;
         }
-      } // scopedId
-
-
-      if (scopeId) {
-        options._scopeId = scopeId;
-      }
-
-      var hook;
-
-      if (moduleIdentifier) {
-        // server build
-        hook = function hook(context) {
-          // 2.3 injection
-          context = context || // cached call
-          this.$vnode && this.$vnode.ssrContext || // stateful
-          this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
-          // 2.2 with runInNewContext: true
-
-          if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-            context = __VUE_SSR_CONTEXT__;
-          } // inject component styles
-
-
-          if (style) {
-            style.call(this, createInjectorSSR(context));
-          } // register component module identifier for async chunk inference
-
-
-          if (context && context._registeredComponents) {
-            context._registeredComponents.add(moduleIdentifier);
-          }
-        }; // used by ssr in case component is cached and beforeCreate
-        // never gets called
-
-
-        options._ssrRegister = hook;
-      } else if (style) {
-        hook = shadowMode ? function () {
-          style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
-        } : function (context) {
-          style.call(this, createInjector(context));
-        };
-      }
-
-      if (hook) {
-        if (options.functional) {
-          // register for functional component in vue file
-          var originalRender = options.render;
-
-          options.render = function renderWithStyleInjection(h, context) {
-            hook.call(context);
-            return originalRender(h, context);
-          };
-        } else {
-          // inject component registration as beforeCreate hook
-          var existing = options.beforeCreate;
-          options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        // Vue.extend constructor export interop.
+        const options = typeof script === 'function' ? script.options : script;
+        // render functions
+        if (template && template.render) {
+            options.render = template.render;
+            options.staticRenderFns = template.staticRenderFns;
+            options._compiled = true;
+            // functional template
+            if (isFunctionalTemplate) {
+                options.functional = true;
+            }
         }
-      }
-
-      return script;
+        // scopedId
+        if (scopeId) {
+            options._scopeId = scopeId;
+        }
+        let hook;
+        if (moduleIdentifier) {
+            // server build
+            hook = function (context) {
+                // 2.3 injection
+                context =
+                    context || // cached call
+                        (this.$vnode && this.$vnode.ssrContext) || // stateful
+                        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext); // functional
+                // 2.2 with runInNewContext: true
+                if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+                    context = __VUE_SSR_CONTEXT__;
+                }
+                // inject component styles
+                if (style) {
+                    style.call(this, createInjectorSSR(context));
+                }
+                // register component module identifier for async chunk inference
+                if (context && context._registeredComponents) {
+                    context._registeredComponents.add(moduleIdentifier);
+                }
+            };
+            // used by ssr in case component is cached and beforeCreate
+            // never gets called
+            options._ssrRegister = hook;
+        }
+        else if (style) {
+            hook = shadowMode
+                ? function (context) {
+                    style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+                }
+                : function (context) {
+                    style.call(this, createInjector(context));
+                };
+        }
+        if (hook) {
+            if (options.functional) {
+                // register for functional component in vue file
+                const originalRender = options.render;
+                options.render = function renderWithStyleInjection(h, context) {
+                    hook.call(context);
+                    return originalRender(h, context);
+                };
+            }
+            else {
+                // inject component registration as beforeCreate hook
+                const existing = options.beforeCreate;
+                options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+            }
+        }
+        return script;
     }
-
-    var normalizeComponent_1 = normalizeComponent;
 
     /* script */
     var __vue_script__ = script;
@@ -265,10 +268,12 @@
 
     /* style inject SSR */
 
-    var Editor = normalizeComponent_1({
+    /* style inject shadow dom */
+
+    var __vue_component__ = normalizeComponent({
       render: __vue_render__,
       staticRenderFns: __vue_staticRenderFns__
-    }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, undefined, undefined);
+    }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, undefined, undefined);
 
     function install(Vue) {
       var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -277,7 +282,7 @@
         componentName: options.componentName || 'editor'
       };
       Vue.component(defaultOptions.componentName, Vue.extend({
-        extends: Editor,
+        extends: __vue_component__,
         data: function data() {
           return {
             apiKey: options.apiKey
@@ -311,4 +316,4 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
