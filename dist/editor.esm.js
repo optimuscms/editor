@@ -8,7 +8,7 @@ var config = function config() {
     convert_urls: false,
     body_class: 'content p-4',
     content_css: '/front/css/app.css',
-    plugins: 'hr image link lists paste table media',
+    plugins: 'code hr image link lists paste table media',
     toolbar: "\n            code |\n            undo redo |\n            styleselect |\n            bold italic underline |\n            alignleft aligncenter alignright |\n            bullist numlist hr blockquote |\n            table link image media |\n            removeformat |\n        ",
     formats: {
       alignleft: {
@@ -264,7 +264,7 @@ var __vue_is_functional_template__ = false;
 
 /* style inject shadow dom */
 
-var __vue_component__ = normalizeComponent({
+var __vue_component__ = /*#__PURE__*/normalizeComponent({
   render: __vue_render__,
   staticRenderFns: __vue_staticRenderFns__
 }, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, undefined, undefined);
